@@ -22,7 +22,17 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      this.initForm();
+      const id = paramMap.get("id");
+      if (id) {
+        this.httpService
+          .get<User>(`https://restapi.fr/api/angularuser/${id}`)
+          .subscribe((user: User) => {
+            this.user = user;
+            this.initForm(user);
+          });
+      } else {
+        this.initForm();
+      }
     });
   }
 
