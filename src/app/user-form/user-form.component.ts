@@ -57,4 +57,10 @@ export class UserFormComponent implements OnInit {
         .subscribe((user: User) => this.router.navigateByUrl("/"));
     }
   }
+
+  delete() {
+    this.httpService
+      .delete(`https://restapi.fr/api/angularuser/${this.user._id}`)
+      .subscribe((user: User) => this.router.navigateByUrl("/"));
+  }
 }
