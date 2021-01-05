@@ -44,8 +44,17 @@ export class UserFormComponent implements OnInit {
   }
 
   submit() {
-    this.httpService
-      .post<User>("https://restapi.fr/api/angularuser", this.userForm.value)
-      .subscribe((user: User) => this.router.navigateByUrl("/"));
+    if (this.user) {
+      this.httpService
+        .put<User>(
+          `https://restapi.fr/api/angularuser/${this.user._id}`,
+          this.userForm.value
+        )
+        .subscribe((user: User) => this.router.navigateByUrl("/"));
+    } else {
+      this.httpService
+        .post<User>("https://restapi.fr/api/angularuser", this.userForm.value)
+        .subscribe((user: User) => this.router.navigateByUrl("/"));
+    }
   }
 }
