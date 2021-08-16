@@ -23,12 +23,13 @@ export class UserFormComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const id = paramMap.get('id');
+      console.log(id)
       if (id) {
         this.httpService
           .get<User>(`https://restapi.fr/api/angularuser/${id}`)
           .subscribe((user: User) => {
             this.user = user;
-            this.initForm(user);
+            this.userForm = this.initForm(user);
           });
       } else {
         this.initForm();
@@ -50,17 +51,17 @@ export class UserFormComponent implements OnInit {
           `https://restapi.fr/api/angularuser/${this.user._id}`,
           this.userForm.value
         )
-        .subscribe((user: User) => this.router.navigateByUrl('/'));
+        .subscribe(() => this.router.navigateByUrl('/'));
     } else {
       this.httpService
         .post<User>('https://restapi.fr/api/angularuser', this.userForm.value)
-        .subscribe((user: User) => this.router.navigateByUrl('/'));
+        .subscribe(() => this.router.navigateByUrl('/'));
     }
   }
 
   delete() {
     this.httpService
       .delete(`https://restapi.fr/api/angularuser/${this.user!._id}`)
-      .subscribe((user: User) => this.router.navigateByUrl('/'));
+      .subscribe(() => this.router.navigateByUrl('/'));
   }
 }
