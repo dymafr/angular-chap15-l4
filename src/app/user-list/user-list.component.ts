@@ -5,7 +5,7 @@ import { User } from '../user.interface';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
   public users?: User[];
@@ -15,8 +15,8 @@ export class UserListComponent implements OnInit {
   ngOnInit() {
     this.httpService
       .get<User[]>('https://restapi.fr/api/angularuser')
-      .subscribe(users => {
-        this.users = users;
+      .subscribe((users) => {
+        this.users = Array.isArray(users) ? users : [users];
       });
   }
 }
